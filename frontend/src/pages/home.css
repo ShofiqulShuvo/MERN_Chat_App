@@ -1,0 +1,10 @@
+.loginSignup {
+  padding: 1rem;
+  max-width: fit-content;
+  box-shadow: 3px 3px 10px rgba(44, 44, 49, 0.274);
+}
+
+.tabItem {
+  padding: 0.75rem 0.5rem !important;
+  min-width: 300px !important;
+}
