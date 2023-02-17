@@ -1,9 +1,10 @@
 import React from "react";
+import Index from "./routes/Index";
 
 const App = () => {
   return (
     <div>
-      <h1>All Ok</h1>
+      <Index />
     </div>
   );
 };
