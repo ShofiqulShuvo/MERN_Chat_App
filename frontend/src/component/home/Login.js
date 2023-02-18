@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
+import { BASE_URL, postConfigureJason } from "../../api/api";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
@@ -14,9 +16,33 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(userData);
+
+    if (!userData.email || !userData.password) {
+      toast.error("please fill all the filds");
+    }
+
+    try {
+      const res = await fetch(
+        `${BASE_URL}/user/login`,
+        postConfigureJason(userData)
+      );
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.dismiss();
+        toast.success(data.message);
+        console.log(data);
+        localStorage.setItem("chat_app_token", JSON.stringify(data.token));
+      } else {
+        toast.dismiss();
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -34,6 +60,7 @@ const Login = () => {
               name="email"
               value={userData.email}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="mb-3">
@@ -48,6 +75,7 @@ const Login = () => {
                 name="password"
                 value={userData.password}
                 onChange={handleChange}
+                required
               />
               <button
                 type="button"

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { BASE_URL, postConfigureMultipart } from "../../api/api";
 
 const Signup = () => {
   const [showPass, setShowPass] = useState(false);
@@ -8,11 +10,10 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
+    picture: "",
   };
 
   const [userData, setUserData] = useState(initialState);
-
-  const [picture, setPicture] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,18 +25,55 @@ const Signup = () => {
 
   const handlePictureChange = (e) => {
     const file = e.target.files[0];
-    setPicture(file);
+    setUserData((prevData) => ({
+      ...prevData,
+      picture: file,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(picture);
+    if (!userData.name || !userData.email || !userData.password) {
+      toast.dismiss();
+      toast.error("please fill all the field");
+    } else if (!userData.picture) {
+      toast.dismiss();
+      toast.error("please select a profile picture");
+    }
+
+    const formData = new FormData();
+
+    formData.append("name", userData.name);
+    formData.append("email", userData.email);
+    formData.append("password", userData.password);
+    formData.append("picture", userData.picture);
+
+    try {
+      const res = await fetch(
+        `${BASE_URL}/user/signup`,
+        postConfigureMultipart(formData)
+      );
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.dismiss();
+        toast.success(data.message);
+        console.log(data);
+        localStorage.setItem("chat_app_token", JSON.stringify(data.token));
+      } else {
+        toast.dismiss();
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error(error.message);
+    }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType={"multipart/form-data"}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label w-100 fw-bold">
             Name:
@@ -99,6 +137,7 @@ const Signup = () => {
             className="form-control"
             id="picture"
             accept={"image/png" && "image/jpg" && "image/jpeg"}
+            name="picture"
             onChange={handlePictureChange}
             required
           />
