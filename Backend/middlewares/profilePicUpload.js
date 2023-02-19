@@ -1,20 +1,17 @@
 const multer = require("multer");
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 // upload setup for diskstorage using multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadFolder = __dirname + `/../uploads/profile_pictures/`;
+    const uploadFolder = __dirname + `/../uploads/images/`;
     cb(null, uploadFolder);
   },
   filename: (req, file, cb) => {
     const extName = path.extname(file.originalname);
 
-    const fileName =
-      file.originalname.replace(extName, "").split(" ").join("-") +
-      "-" +
-      Date.now() +
-      extName;
+    const fileName = uuidv4() + Date.now() + extName;
 
     cb(null, fileName);
   },

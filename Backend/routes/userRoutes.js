@@ -2,20 +2,21 @@ const express = require("express");
 const {
   loginUser,
   signupUser,
-  getSingleUser,
+  getUsers,
 } = require("../controlers/userControlers");
+
+const authUser = require("../middlewares/authUser");
 const profilePicUpload = require("../middlewares/profilePicUpload");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("hi");
-});
+// search user
+router.get("/", authUser, getUsers);
 
-router.get("/:id", getSingleUser);
-
+// login
 router.post("/login", loginUser);
 
+// signup
 router.post("/signup", profilePicUpload, signupUser);
 
 module.exports = router;

@@ -3,20 +3,6 @@ const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
 const fs = require("fs");
 
-// get user by id
-const getSingleUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findOne({ _id: id });
-    res.send(user);
-  } catch (error) {
-    res.status(500).json({
-      error: error.message,
-      statck: error.statck,
-    });
-  }
-};
-
 // signup controler
 const signupUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -24,15 +10,17 @@ const signupUser = async (req, res) => {
 
   try {
     if (!name || !email || !password) {
-      res.status(400);
-      throw new Error("all data required");
+      res.status(400).json({
+        message: "all data required",
+      });
     }
 
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      res.status(400);
-      throw new Error("email already used by a user");
+      res.status(400).json({
+        message: "email already used by a user",
+      });
     }
 
     const hashPass = await bcrypt.hash(password, 10);
@@ -57,21 +45,22 @@ const signupUser = async (req, res) => {
     const user = await newUser.save();
 
     if (!user) {
-      res.status(500);
-      throw new Error("Failed to create account");
+      res.status(500).json({
+        message: "Failed to create account",
+      });
     } else {
       res.status(201).json({
         id: user._id,
         name: user.name,
         email: user.email,
-        picture: user.picture,
+        picture: `http://localhost:3500/uploads/images/${user.picture}`,
         token: generateToken(user._id),
         message: "sign up successfull",
       });
     }
   } catch (error) {
     if (image) {
-      const imagePath = `${__dirname}/../uploads/profile_pictures/${image.filename}`;
+      const imagePath = `${__dirname}/../uploads/images/${image.filename}`;
       fs.unlink(imagePath, (err) => {
         if (err) {
           console.log(err.message);
@@ -100,17 +89,19 @@ const loginUser = async (req, res) => {
           id: user._id,
           name: user.name,
           email: user.email,
-          picture: user.picture,
+          picture: `http://localhost:3500/uploads/images/${user.picture}`,
           token: generateToken(user._id),
           message: "login Successfull",
         });
       } else {
-        res.status(401);
-        throw new Error("Invalid email or password");
+        res.status(401).json({
+          message: "Invalid email or password",
+        });
       }
     } else {
-      res.status(401);
-      throw new Error("Invalid email or password");
+      res.status(401).json({
+        message: "Invalid email or password",
+      });
     }
   } catch (error) {
     res.status(res.statusCode || 500).json({
@@ -119,8 +110,20 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  const searchKeyword = req.query.search;
+
+  const user = await User.find({
+    $or: [
+      { name: { $regex: searchKeyword, $options: "i" } },
+      { email: { $regex: searchKeyword, $options: "i" } },
+    ],
+  }).find({ _id: { $ne: req.user._id } });
+  res.send(user);
+};
+
 module.exports = {
   signupUser,
   loginUser,
-  getSingleUser,
+  getUsers,
 };
