@@ -16,3 +16,24 @@ export const postConfigureJason = (data) => {
     },
   };
 };
+
+export const postConfigureToken = (token, data) => {
+  return {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  };
+};
+
+export const getConfigureToken = (token) => {
+  return {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+};

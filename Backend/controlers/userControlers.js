@@ -47,7 +47,7 @@ const signupUser = async (req, res, next) => {
         } else {
           res.status(201).json({
             data: {
-              id: user._id,
+              _id: user._id,
               name: user.name,
               email: user.email,
               picture: user.picture,
@@ -86,7 +86,7 @@ const loginUser = async (req, res, next) => {
       if (isValidPassword) {
         res.status(200).json({
           data: {
-            id: user._id,
+            _id: user._id,
             name: user.name,
             email: user.email,
             picture: user.picture,

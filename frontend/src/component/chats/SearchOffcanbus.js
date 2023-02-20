@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../../api/api";
+import { BASE_URL, postConfigureToken } from "../../api/api";
+import { createNewChat } from "../../app/features/chatSlice";
 
 const SearchOffcanbus = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.user);
 
+  // search user
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!search) {
@@ -36,6 +39,25 @@ const SearchOffcanbus = () => {
         toast.dismiss();
         toast.error("failed to search");
       }
+    }
+  };
+
+  const createChat = async (userID) => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/chats`,
+        postConfigureToken(token, { userID })
+      );
+      const data = await res.json();
+      if (res.ok) {
+        dispatch(createNewChat(data));
+      } else {
+        toast.dismiss();
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error(error.message);
     }
   };
 
@@ -90,17 +112,24 @@ const SearchOffcanbus = () => {
               const { _id, name, picture, email } = user;
 
               return (
-                <div key={_id} className="mt-3 p-2 d-flex shadow rounded ">
-                  <img
-                    className="search-user-image rounded-circle border"
-                    src={picture}
-                    alt=""
-                  />
+                <button
+                  key={_id}
+                  className="btn btn-outline-dark text-start border-0 w-100 mt-4 p-2 d-flex shadow rounded "
+                  onClick={() => createChat(_id)}
+                  data-bs-dismiss="offcanvas"
+                >
+                  <div className="search-user-image rounded-circle ">
+                    <img
+                      className="h-100 w-100 rounded-circle"
+                      src={picture}
+                      alt=""
+                    />
+                  </div>
                   <div className="ms-3">
                     <h6 className="p-0 m-0">{name}</h6>
-                    <p className="p-0 m-0 mt-1 text-muted">{email}</p>
+                    <p className="p-0 m-0 mt-1 ">{email}</p>
                   </div>
-                </div>
+                </button>
               );
             })}
         </div>

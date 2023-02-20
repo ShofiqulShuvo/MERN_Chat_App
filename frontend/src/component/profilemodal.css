@@ -1,0 +1,48 @@
+.profile-modal {
+  position: absolute;
+  background-color: rgba(45, 45, 46, 0.575);
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-model-item {
+  background-color: aliceblue;
+}
+
+.profile-modal-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: 2px solid rgba(167, 4, 231, 0.637);
+}
+
+.profile-modal-btn {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 20px;
+  color: rgba(51, 51, 51, 0.952);
+  transition: all 0.25s ease-in-out;
+}
+
+.profile-modal-btn:hover {
+  color: black;
+  transform: scale(1.2);
+}
+
+.profile-modal-detail {
+  margin-top: 1rem;
+}
+
+.profile-modal-detail h3 {
+  color: #333;
+}
+
+.profile-modal-detail h6 {
+  color: rgb(86, 2, 97);
+}
