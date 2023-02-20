@@ -1,15 +1,14 @@
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
+const createError = require("http-errors");
 
 // create Chat
-const createChat = async (req, res) => {
+const createChat = async (req, res, next) => {
   const { userID } = req.body;
 
   if (!userID) {
     res.status(400);
-    res.json({
-      message: "ok",
-    });
+    next(createError("user not found"));
   } else {
     let isChat = await Chat.find({
       isGroupChat: false,
@@ -45,16 +44,15 @@ const createChat = async (req, res) => {
 
         res.status(200).send(FullChat);
       } catch (error) {
-        res.status(500).json({
-          message: error.message,
-        });
+        res.status(500);
+        next(createError(error));
       }
     }
   }
 };
 
 // get Chat
-const getChat = async (req, res) => {
+const getChat = async (req, res, next) => {
   try {
     let chats = await Chat.find({
       users: { $elemMatch: { $eq: req.user._id } },
@@ -71,27 +69,22 @@ const getChat = async (req, res) => {
 
     res.status(200).send(chats);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500);
+    next(createError(error));
   }
 };
 
 // create group chat
-const createGroupChat = async (req, res) => {
+const createGroupChat = async (req, res, next) => {
   if (!req.body.users || !req.body.name) {
     res.status(400);
-    res.json({
-      message: "please fill all the field",
-    });
+    next(createError("please fill all the field"));
   } else {
     let users = JSON.parse(req.body.users);
 
     if (users.length < 2) {
       res.status(400);
-      res.json({
-        message: "minimum 3 people required for create group chat",
-      });
+      next(createError("minimum 3 people required for create group chat"));
     } else {
       users.push(req.user);
 
@@ -109,16 +102,15 @@ const createGroupChat = async (req, res) => {
 
         res.status(200).json(fullGroupChat);
       } catch (error) {
-        res.status(500).json({
-          message: error.message,
-        });
+        res.status(500);
+        next(createError(error));
       }
     }
   }
 };
 
 // rename group chat
-const renameGroupChat = async (req, res) => {
+const renameGroupChat = async (req, res, next) => {
   try {
     const { chatId, chatName } = req.body;
 
@@ -131,21 +123,19 @@ const renameGroupChat = async (req, res) => {
       .populate("groupAdmin", "picture name email");
 
     if (!updateOne) {
-      res.status(404).json({
-        message: "chat not found",
-      });
+      res.status(404);
+      next(createError("Chat Not Found"));
     } else {
       res.status(200).json(updateOne);
     }
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500);
+    next(createError(next));
   }
 };
 
 // add to group
-const addToGroup = async (req, res) => {
+const addToGroup = async (req, res, next) => {
   try {
     const { chatId, userId } = req.body;
 
@@ -160,21 +150,19 @@ const addToGroup = async (req, res) => {
       .populate("groupAdmin", "picture name email");
 
     if (!add) {
-      res.status(404).json({
-        message: "chat not found",
-      });
+      res.status(404);
+      next(createError("Chat Not Found"));
     } else {
       res.status(200).json(add);
     }
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500);
+    next(createError(error));
   }
 };
 
 // remove from group
-const removeFromGroup = async (req, res) => {
+const removeFromGroup = async (req, res, next) => {
   try {
     const { chatId, userId } = req.body;
 
@@ -189,16 +177,14 @@ const removeFromGroup = async (req, res) => {
       .populate("groupAdmin", "picture name email");
 
     if (!remove) {
-      res.status(404).json({
-        message: "chat not found",
-      });
+      res.status(404);
+      next(createError("Chat Not Found"));
     } else {
       res.status(200).json(remove);
     }
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500);
+    next(createError(error));
   }
 };
 

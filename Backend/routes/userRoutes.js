@@ -6,7 +6,7 @@ const {
 } = require("../controlers/userControlers");
 
 const authUser = require("../middlewares/authUser");
-const profilePicUpload = require("../middlewares/profilePicUpload");
+const { singleUpload } = require("../middlewares/imageUpload");
 
 const router = express.Router();
 
@@ -17,6 +17,6 @@ router.get("/", authUser, getUsers);
 router.post("/login", loginUser);
 
 // signup
-router.post("/signup", profilePicUpload, signupUser);
+router.post("/signup", singleUpload("image"), signupUser);
 
 module.exports = router;

@@ -19,3 +19,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/*chat navbar */
+.navbar-user-image {
+  height: 29px;
+  width: 29px;
+}
+
+/* search user */
+.search-user-image {
+  height: 30px;
+  width: 30px;
+}

@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import Navbar from "../component/chats/Navbar";
 
 const ChatPage = () => {
-  const [chats, setChats] = useState([]);
-
-  const fetchChat = async () => {
-    const res = await fetch("http://localhost:3500/chats");
-    const data = await res.json();
-    setChats(data);
-    console.log(data);
-  };
-
-  useEffect(() => {
-    fetchChat();
-  }, []);
-
   return (
-    <div>
-      {chats &&
-        chats.map((chat) => {
-          return <div key={chat._id}>{chat.chatName}</div>;
-        })}
-    </div>
+    <>
+      <Navbar />
+      <div className="container mx-auto p-1 row justify-content-between ">
+        <div className="col-12 col-md-4 p-2 shadow">s</div>
+        <div className="shadow col-12 col-md-8 p-2">ssss</div>
+      </div>
+    </>
   );
 };
 

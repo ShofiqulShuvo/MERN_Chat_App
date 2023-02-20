@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
-import { BASE_URL, postConfigureJason } from "../../api/api";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "../../app/features/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [showPass, setShowPass] = useState(false);
 
   const [userData, setUserData] = useState({ email: "", password: "" });
@@ -21,78 +24,57 @@ const Login = () => {
 
     if (!userData.email || !userData.password) {
       toast.error("please fill all the filds");
-    }
-
-    try {
-      const res = await fetch(
-        `${BASE_URL}/user/login`,
-        postConfigureJason(userData)
-      );
-      const data = await res.json();
-
-      if (res.ok) {
-        toast.dismiss();
-        toast.success(data.message);
-        console.log(data);
-        localStorage.setItem("chat_app_token", JSON.stringify(data.token));
-      } else {
-        toast.dismiss();
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.dismiss();
-      toast.error(error.message);
+    } else {
+      dispatch(login(userData));
     }
   };
 
   return (
     <>
-      <>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="loginemail" className="form-label fw-bold">
-              Email:
-            </label>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="loginemail" className="form-label fw-bold">
+            Email:
+          </label>
+          <input
+            type="email"
+            className="form-control "
+            id="loginemail"
+            name="email"
+            value={userData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label fw-bold">
+            Password:
+          </label>
+          <div className="input-group">
             <input
-              type="email"
+              type={showPass ? "text" : "password"}
               className="form-control "
-              id="loginemail"
-              name="email"
-              value={userData.email}
+              id="password"
+              name="password"
+              value={userData.password}
               onChange={handleChange}
               required
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label fw-bold">
-              Password:
-            </label>
-            <div className="input-group">
-              <input
-                type={showPass ? "text" : "password"}
-                className="form-control "
-                id="password"
-                name="password"
-                value={userData.password}
-                onChange={handleChange}
-                required
-              />
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={() => setShowPass(!showPass)}
-              >
-                <FaEye />
-              </button>
-            </div>
-          </div>
-          <div className="mb-2">
-            <button type="submit" className="btn btn-sm btn-primary w-100">
-              Login
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => setShowPass(!showPass)}
+            >
+              <FaEye />
             </button>
           </div>
-        </form>
-      </>
+        </div>
+        <div className="mb-2">
+          <button type="submit" className="btn btn-sm btn-primary w-100">
+            Login
+          </button>
+        </div>
+      </form>
     </>
   );
 };

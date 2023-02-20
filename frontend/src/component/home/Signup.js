@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { BASE_URL, postConfigureMultipart } from "../../api/api";
+import { signup } from "../../app/features/userSlice";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
   const [showPass, setShowPass] = useState(false);
 
   const initialState = {
     name: "",
     email: "",
     password: "",
-    picture: "",
+    image: "",
   };
 
   const [userData, setUserData] = useState(initialState);
@@ -23,11 +26,11 @@ const Signup = () => {
     }));
   };
 
-  const handlePictureChange = (e) => {
+  const handleimageChange = (e) => {
     const file = e.target.files[0];
     setUserData((prevData) => ({
       ...prevData,
-      picture: file,
+      image: file,
     }));
   };
 
@@ -37,9 +40,9 @@ const Signup = () => {
     if (!userData.name || !userData.email || !userData.password) {
       toast.dismiss();
       toast.error("please fill all the field");
-    } else if (!userData.picture) {
+    } else if (!userData.image) {
       toast.dismiss();
-      toast.error("please select a profile picture");
+      toast.error("please select a profile image");
     }
 
     const formData = new FormData();
@@ -47,28 +50,9 @@ const Signup = () => {
     formData.append("name", userData.name);
     formData.append("email", userData.email);
     formData.append("password", userData.password);
-    formData.append("picture", userData.picture);
+    formData.append("image", userData.image);
 
-    try {
-      const res = await fetch(
-        `${BASE_URL}/user/signup`,
-        postConfigureMultipart(formData)
-      );
-      const data = await res.json();
-
-      if (res.ok) {
-        toast.dismiss();
-        toast.success(data.message);
-        console.log(data);
-        localStorage.setItem("chat_app_token", JSON.stringify(data.token));
-      } else {
-        toast.dismiss();
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.dismiss();
-      toast.error(error.message);
-    }
+    dispatch(signup(formData));
   };
 
   return (
@@ -129,16 +113,16 @@ const Signup = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="picture" className="form-label fw-bold">
-            Profile Picture:
+          <label htmlFor="image" className="form-label fw-bold">
+            Profile image:
           </label>
           <input
             type="file"
             className="form-control"
-            id="picture"
+            id="image"
             accept={"image/png" && "image/jpg" && "image/jpeg"}
-            name="picture"
-            onChange={handlePictureChange}
+            name="image"
+            onChange={handleimageChange}
             required
           />
         </div>
