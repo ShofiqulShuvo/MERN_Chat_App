@@ -21,12 +21,12 @@ router.get("/", authUser, getChat);
 router.post("/group", authUser, createGroupChat);
 
 // rename group chat
-router.post("/group/rename", authUser, renameGroupChat);
+router.put("/group/rename", authUser, renameGroupChat);
 
 // add to group
-router.post("/group/add", authUser, addToGroup);
+router.put("/group/add", authUser, addToGroup);
 
 // remove from group
-router.post("/group/remove", authUser, removeFromGroup);
+router.put("/group/remove", authUser, removeFromGroup);
 
 module.exports = router;

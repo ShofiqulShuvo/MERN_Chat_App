@@ -1,0 +1,47 @@
+.curent-chat-head {
+  height: 15%;
+}
+
+.curent-chat-image {
+  height: 40px;
+  width: 40px;
+  border: 2px solid #b94907;
+  padding: 0;
+}
+
+.curent-chat-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: rgb(18, 34, 12);
+}
+
+.current-chat-back {
+  background-color: transparent;
+  color: #333;
+  font-size: 1.4rem;
+  padding: 0.15rem 0.25rem;
+  border: none;
+  transform: translate(0, -1.5px);
+}
+
+.current-chat-back:hover {
+  color: rgb(48, 3, 151);
+}
+
+.curent-chat-view {
+  background-color: transparent;
+  color: rgb(51, 51, 51);
+  font-size: 1.6rem;
+  padding: 0.15rem 0.25rem;
+  border: none;
+  transform: translate(-8px, -5px);
+}
+
+.curent-chat-view:hover {
+  color: rgb(16, 6, 158);
+}
+
+.curent-chat-message {
+  background-color: rgba(86, 92, 92, 0.363);
+  height: 85%;
+}

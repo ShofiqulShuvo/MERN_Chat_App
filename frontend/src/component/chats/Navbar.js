@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar navbar-dark bg-dark">
+      <nav className="chat-page-navbar navbar navbar-dark bg-dark">
         <div className="container px-2">
           <div>
             <SearchOffcanbus />

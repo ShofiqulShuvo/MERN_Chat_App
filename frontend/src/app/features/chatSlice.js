@@ -17,6 +17,8 @@ const chatSlice = createSlice({
   name: "chat",
   initialState: {
     chat: [],
+    currentChat: null,
+    selectedChat: false,
   },
   reducers: {
     createNewChat: (state, action) => {
@@ -30,6 +32,42 @@ const chatSlice = createSlice({
         state.chat.splice(findChat, 1);
         state.chat.unshift(chat);
       }
+      state.currentChat = chat;
+      state.selectedChat = true;
+    },
+    createGroupChat: (state, action) => {
+      const chat = action.payload;
+
+      state.chat.unshift(chat);
+      state.currentChat = chat;
+      state.selectedChat = true;
+    },
+    goToChat: (state, action) => {
+      const chat = action.payload;
+
+      state.currentChat = chat;
+      state.selectedChat = true;
+    },
+    closeChat: (state) => {
+      state.selectedChat = false;
+      state.currentChat = null;
+    },
+    updateChat: (state, action) => {
+      const chat = action.payload;
+      const targetChat = state.chat.findIndex((c) => c._id === chat._id);
+
+      if (targetChat >= 0) {
+        state.chat[targetChat] = chat;
+      }
+
+      state.currentChat = { ...state.currentChat, ...chat };
+    },
+    leaveGroupChat: (state, action) => {
+      const chat = action.payload;
+
+      state.chat = state.chat.filter((c) => c._id !== chat._id);
+
+      state.currentChat = null;
     },
   },
   extraReducers: (builder) => {
@@ -43,5 +81,12 @@ const chatSlice = createSlice({
   },
 });
 
-export const { createNewChat } = chatSlice.actions;
+export const {
+  createNewChat,
+  createGroupChat,
+  goToChat,
+  closeChat,
+  updateChat,
+  leaveGroupChat,
+} = chatSlice.actions;
 export default chatSlice.reducer;

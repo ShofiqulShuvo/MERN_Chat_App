@@ -80,7 +80,7 @@ const createGroupChat = async (req, res, next) => {
     res.status(400);
     next(createError("please fill all the field"));
   } else {
-    let users = JSON.parse(req.body.users);
+    let users = req.body.users;
 
     if (users.length < 2) {
       res.status(400);

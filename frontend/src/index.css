@@ -13,6 +13,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(49, 50, 51);
 }
 
 code {
@@ -21,6 +22,10 @@ code {
 }
 
 /*chat navbar */
+.chat-page-navbar {
+  height: 15vh;
+}
+
 .navbar-user-image {
   height: 29px;
   width: 29px;

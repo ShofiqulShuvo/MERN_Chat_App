@@ -28,6 +28,17 @@ export const postConfigureToken = (token, data) => {
   };
 };
 
+export const putConfigureToken = (token, data) => {
+  return {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  };
+};
+
 export const getConfigureToken = (token) => {
   return {
     method: "GET",

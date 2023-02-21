@@ -9,13 +9,13 @@ const ProfileModal = ({ setViewProfile, data }) => {
         <div className="position-relative d-block w-100">
           <div className="profile-modal-img ">
             <img
-              className="mh-100 mw-100 rounded-circle"
+              className="h-100 w-100 rounded-circle"
               src={data.picture}
               alt=""
             />
           </div>
           <button
-            className="profile-modal-btn btn"
+            className="profile-modal-btn btn border-0"
             onClick={() => setViewProfile(false)}
           >
             <FaTimes />
