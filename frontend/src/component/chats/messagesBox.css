@@ -1,0 +1,15 @@
+.messages-cont {
+  height: 100%;
+  width: 100%;
+  padding: 0.25rem 0 0.45rem;
+}
+
+.messages {
+  height: 92%;
+  padding: 0.45rem 0;
+  overflow-y: auto;
+}
+
+.send-message {
+  height: 8%;
+}

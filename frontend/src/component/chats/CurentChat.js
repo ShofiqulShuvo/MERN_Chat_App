@@ -5,6 +5,7 @@ import { closeChat } from "../../app/features/chatSlice";
 import { getChatName, getChatPicture } from "../../utility/chatPageLogic";
 
 import "./curentChat.css";
+import MessagesBox from "./MessagesBox";
 import ViewCurentChatDetail from "./ViewCurentChatDetail";
 
 const CurentChat = () => {
@@ -12,7 +13,7 @@ const CurentChat = () => {
   const { currentChat } = useSelector((state) => state.chat);
   const { userData } = useSelector((state) => state.user);
 
-  const [viewDetail, setViewDetail] = useState(true);
+  const [viewDetail, setViewDetail] = useState(false);
 
   const handleCloseChat = () => {
     dispatch(closeChat());
@@ -58,7 +59,9 @@ const CurentChat = () => {
               ) : null}
             </div>
           </div>
-          <div className="curent-chat-message rounded-2 p-2">message</div>
+          <div className="curent-chat-message rounded-2 p-2">
+            <MessagesBox />
+          </div>
         </>
       ) : (
         <div className="d-flex justify-content-center align-items-center h-100">

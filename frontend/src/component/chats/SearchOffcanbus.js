@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { BASE_URL, postConfigureToken } from "../../api/api";
 import { createNewChat } from "../../app/features/chatSlice";
+import Spiners from "../Spiners";
 
 const SearchOffcanbus = () => {
   const [search, setSearch] = useState("");
@@ -105,7 +106,7 @@ const SearchOffcanbus = () => {
             </button>
           </form>
 
-          {loading && <h5 className="mt-4 text-center">Loading...</h5>}
+          {loading && <Spiners />}
 
           {searchResult &&
             searchResult.map((user) => {

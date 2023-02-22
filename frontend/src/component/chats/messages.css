@@ -1,0 +1,16 @@
+.message-container {
+  overflow-x: hidden;
+}
+
+.message-sender-pic-cont {
+  width: 35px !important;
+  height: 35px !important;
+  overflow: hidden;
+}
+
+.message-text {
+  width: 85%;
+  max-width: fit-content !important;
+  /* word-break: break-all; */
+  word-wrap: break-word !important;
+}
