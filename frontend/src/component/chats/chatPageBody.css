@@ -1,10 +1,4 @@
-.chat-page-body {
-  height: 84vh;
-  width: 100vw;
-  padding: 1rem;
-}
-
-.chat-page-mychat {
+.chat-page-body-mychat {
   background-color: rgb(252, 252, 252);
   width: 30%;
   height: 100%;
@@ -12,7 +6,7 @@
   overflow-y: auto;
 }
 
-.chat-page-message {
+.chat-page-body-message {
   width: 69%;
   background-color: rgb(255, 255, 255);
   height: 100%;
@@ -20,19 +14,19 @@
 }
 
 @media screen and (max-width: 1000px) {
-  .chat-page-mychat {
+  .chat-page-body-mychat {
     width: 100%;
   }
-  .chat-page-message {
+  .chat-page-body-message {
     width: 100%;
     display: none;
   }
 
-  .hide-chat-page-mychat {
+  .hide-chat-page-body-mychat {
     display: none;
   }
 
-  .show-chat-page-message {
+  .show-chat-page-body-message {
     display: block;
   }
 }

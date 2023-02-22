@@ -6,6 +6,8 @@ import SearchOffcanbus from "./SearchOffcanbus";
 import { logout } from "../../app/features/userSlice";
 import ProfileModal from "../ProfileModal";
 
+import "./navbar.css";
+
 const Navbar = () => {
   const dispatch = useDispatch();
 
@@ -15,7 +17,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="chat-page-navbar navbar navbar-dark bg-dark">
+      <nav className="chat-page-navbar navbar navbar-dark">
         <div className="container px-2">
           <div>
             <SearchOffcanbus />

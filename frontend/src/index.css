@@ -13,22 +13,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(49, 50, 51);
+  background-color: rgb(0, 0, 2);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-/*chat navbar */
-.chat-page-navbar {
-  height: 15vh;
-}
-
-.navbar-user-image {
-  height: 29px;
-  width: 29px;
 }
 
 /* search user */

@@ -24,13 +24,13 @@ const MyChats = () => {
   return (
     <>
       <div className="p-2">
-        <div className="d-flex justify-content-between align-items-center">
-          <h4>My Chats</h4>
+        <div className="d-flex justify-content-between ">
+          <h5>My Chats</h5>
           <button
-            className="btn  btn-outline-secondary fw-bold "
+            className="btn btn-sm  btn-outline-dark "
             onClick={() => setGrpChatModal(true)}
           >
-            Create Group Chat
+            Create Group
           </button>
         </div>
         <div className="mt-2">
