@@ -2,15 +2,23 @@
   overflow-x: hidden;
 }
 
+.message {
+  width: 60%;
+}
+
 .message-sender-pic-cont {
   width: 35px !important;
   height: 35px !important;
   overflow: hidden;
 }
 
-.message-text {
+.message-text-cont {
   width: 85%;
   max-width: fit-content !important;
-  /* word-break: break-all; */
+}
+
+.message-text {
+  color: rgb(0, 0, 2);
   word-wrap: break-word !important;
+  white-space: break-spaces;
 }

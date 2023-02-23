@@ -13,7 +13,6 @@ const MessagesBox = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [sendMessage, setSendMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  console.log(messages);
 
   const fetchMessage = async () => {
     try {
@@ -67,14 +66,16 @@ const MessagesBox = () => {
     }
   };
   return (
-    <div className="messages-cont">
-      <div className="messages px-3">
+    <div className="messages-cont px-2">
+      <div className="messages ">
         {isLoading ? <Spiners /> : <Messages messages={messages} />}
       </div>
-      <form className="send-message w-100" onSubmit={handleSendMessage}>
+      <form className="send-message w-100 px-2" onSubmit={handleSendMessage}>
         <div className="d-flex">
-          <input
+          <textarea
             type="text"
+            cols={1}
+            rows={1}
             className="form-control form-control-sm"
             placeholder="Write your message"
             value={sendMessage}

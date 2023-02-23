@@ -27,14 +27,14 @@ const signupUser = async (req, res, next) => {
         if (image) {
           newUser = new User({
             name,
-            email,
+            email: email.toLowerCase(),
             password: hashPass,
             picture: image.link,
           });
         } else {
           newUser = new User({
             name,
-            email,
+            email: email.toLowerCase(),
             password: hashPass,
           });
         }

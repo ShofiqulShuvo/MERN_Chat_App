@@ -59,7 +59,7 @@ const CurentChat = () => {
               ) : null}
             </div>
           </div>
-          <div className="curent-chat-message rounded-2 p-2">
+          <div className="curent-chat-message rounded-2 p-1">
             <MessagesBox />
           </div>
         </>
