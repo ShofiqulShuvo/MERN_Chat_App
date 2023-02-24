@@ -11,3 +11,9 @@ export const getChatPicture = (loggedInUser, users) => {
 export const getChatProfile = (loggedInUser, users) => {
   return users[0]._id === loggedInUser._id ? users[1] : users[0];
 };
+
+export const getLastMessageSenderName = (loggedInUser, latestMessageSender) => {
+  return loggedInUser._id === latestMessageSender._id
+    ? "Me"
+    : latestMessageSender.name;
+};

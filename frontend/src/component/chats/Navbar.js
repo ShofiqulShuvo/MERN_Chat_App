@@ -14,6 +14,7 @@ const Navbar = () => {
   const [viewProfile, setViewProfile] = useState(false);
 
   const { userData } = useSelector((state) => state.user);
+  const { notification } = useSelector((state) => state.chat);
 
   return (
     <>
@@ -26,19 +27,48 @@ const Navbar = () => {
           <h3 className="navbar-brand">My Chat App</h3>
 
           <div className="d-flex align-items-center pe-1">
-            <button className="me-2 btn btn-sm btn-primary rounded-circle position-relative">
-              <FaBell />
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                5
-              </span>
-            </button>
-
-            {/* dropdown */}
+            {/* notification Dropdown */}
             <div className="dropdown ">
               <button
-                className="btn border-0 text-white dropdown-toggle"
+                className="notification-dropdown me-2 btn btn-sm btn-primary rounded-circle position-relative dropdown-toggle"
                 type="button"
-                id="dropdownMenuButton1"
+                id="notificationDropDown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <FaBell />
+                {notification.length > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {notification.length}
+                  </span>
+                )}
+              </button>
+              <ul
+                className="dropdown-menu dropdown-menu-end"
+                aria-labelledby="notificationDropDown"
+              >
+                {!notification.length ? (
+                  <li>
+                    <p className="dropdown-item m-0">no new notification</p>
+                  </li>
+                ) : null}
+                {/* <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => dispatch(logout())}
+                  >
+                    Logout
+                  </button>
+                </li> */}
+              </ul>
+            </div>
+
+            {/* profile dropdown */}
+            <div className="dropdown ">
+              <button
+                className="profile-dropdown btn border-0 text-white dropdown-toggle"
+                type="button"
+                id="profileDropDown"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -50,7 +80,7 @@ const Navbar = () => {
               </button>
               <ul
                 className="dropdown-menu dropdown-menu-end"
-                aria-labelledby="dropdownMenuButton1"
+                aria-labelledby="profileDropDown"
               >
                 <li>
                   <button

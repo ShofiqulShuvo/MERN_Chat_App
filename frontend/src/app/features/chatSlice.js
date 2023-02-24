@@ -19,6 +19,7 @@ const chatSlice = createSlice({
     chat: [],
     currentChat: null,
     selectedChat: false,
+    notification: [],
   },
   reducers: {
     createNewChat: (state, action) => {
@@ -69,6 +70,15 @@ const chatSlice = createSlice({
 
       state.currentChat = null;
     },
+    updateLatestMessage: (state, action) => {
+      const message = action.payload;
+
+      const targetChat = state.chat.find((c) => c._id === message.chat._id);
+
+      if (targetChat) {
+        targetChat.latestMessage = message;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getChat.fulfilled, (state, action) => {
@@ -88,5 +98,6 @@ export const {
   closeChat,
   updateChat,
   leaveGroupChat,
+  updateLatestMessage,
 } = chatSlice.actions;
 export default chatSlice.reducer;

@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { BASE_URL, getConfigureToken, postConfigureToken } from "../../api/api";
 import Spiners from "../Spiners";
 import Messages from "./Messages";
+import { io } from "socket.io-client";
+
+// css
 import "./messagesBox.css";
+import { updateLatestMessage } from "../../app/features/chatSlice";
+
+let socket;
 
 const MessagesBox = () => {
-  const { token } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const { token, userData } = useSelector((state) => state.user);
   const { currentChat } = useSelector((state) => state.chat);
 
   const [isLoading, setIsLoading] = useState(false);
   const [sendMessage, setSendMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+  const [socketConect, setSocketConect] = useState(false);
 
   const fetchMessage = async () => {
     try {
@@ -26,6 +36,8 @@ const MessagesBox = () => {
       if (res.ok) {
         setMessages(data);
         setIsLoading(false);
+
+        socket.emit("joinChat", currentChat._id);
       } else {
         setIsLoading(false);
         toast.dismiss();
@@ -42,6 +54,26 @@ const MessagesBox = () => {
     // eslint-disable-next-line
   }, [currentChat]);
 
+  // socket io
+  useEffect(() => {
+    socket = io(BASE_URL);
+    socket.emit("setup", userData);
+    socket.on("connection", () => {
+      setSocketConect(true);
+    });
+  }, [userData]);
+
+  useEffect(() => {
+    socket.on("messageRecive", (newMessage) => {
+      if (!currentChat || currentChat._id !== newMessage.chat._id) {
+        // notification
+      } else {
+        setMessages([...messages, newMessage]);
+        dispatch(updateLatestMessage(newMessage));
+      }
+    });
+  });
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
@@ -56,6 +88,9 @@ const MessagesBox = () => {
       if (res.ok) {
         setSendMessage("");
         setMessages((prev) => [...prev, data]);
+        dispatch(updateLatestMessage(data));
+
+        socket.emit("newMessage", data);
       } else {
         toast.dismiss();
         toast.error("failed to send message");
@@ -65,6 +100,7 @@ const MessagesBox = () => {
       toast.error(error.message);
     }
   };
+
   return (
     <div className="messages-cont px-2">
       <div className="messages ">

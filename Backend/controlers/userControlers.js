@@ -14,7 +14,7 @@ const signupUser = async (req, res, next) => {
       res.status(400);
       throw new Error("all data required");
     } else {
-      const userExists = await User.findOne({ email });
+      const userExists = await User.findOne({ email: email.toLowerCase() });
 
       if (userExists) {
         res.status(406);
@@ -78,7 +78,7 @@ const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
 
     if (user) {
       const isValidPassword = await bcrypt.compare(password, user.password);
