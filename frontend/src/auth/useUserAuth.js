@@ -18,10 +18,10 @@ const useUserAuth = () => {
 
     const data = await res.json();
 
-    if (res.ok) {
-      dispatch(loginWithToken(data));
-    } else {
+    if (!res.ok || data.message === "jwt expired") {
       dispatch(noToken());
+    } else {
+      dispatch(loginWithToken(data));
     }
   };
 
