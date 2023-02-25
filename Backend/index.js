@@ -17,8 +17,6 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-  console.log("connected with socket io");
-
   socket.on("setup", (userData) => {
     socket.join(userData._id);
     socket.emit("connected");
