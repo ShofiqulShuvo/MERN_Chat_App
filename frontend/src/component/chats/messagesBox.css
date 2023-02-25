@@ -1,3 +1,51 @@
+.message-box-head {
+  height: 15%;
+}
+
+.message-box-head-image {
+  height: 40px;
+  width: 40px;
+  border: 2px solid #b94907;
+  padding: 0;
+}
+
+.message-box-head-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: rgb(18, 34, 12);
+}
+
+.message-box-head-back {
+  background-color: transparent;
+  color: #333;
+  font-size: 1.4rem;
+  padding: 0.15rem 0.25rem;
+  border: none;
+  transform: translate(0, -1.5px);
+}
+
+.message-box-head-back:hover {
+  color: rgb(48, 3, 151);
+}
+
+.message-box-head-view {
+  background-color: transparent;
+  color: rgb(51, 51, 51);
+  font-size: 1.6rem;
+  padding: 0.15rem 0.25rem;
+  border: none;
+  transform: translate(-8px, -5px);
+}
+
+.message-box-head-view:hover {
+  color: rgb(16, 6, 158);
+}
+
+.message-box-head-message {
+  background-color: rgba(5, 5, 5, 0.411);
+  height: 85%;
+}
+
 .messages-cont {
   height: 100%;
   width: 100%;
@@ -12,4 +60,8 @@
 
 .send-message {
   height: 8%;
+}
+
+.send-message-text-area {
+  height: 35px;
 }

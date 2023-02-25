@@ -35,12 +35,28 @@ export const signup = createAsyncThunk("user/signup", async (signupData) => {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    isLogedIn: false,
+    isLogedIn: undefined,
     userData: null,
     token: null,
   },
   reducers: {
     logout: (state) => {
+      localStorage.removeItem("chat_app_token");
+
+      state.isLogedIn = false;
+      state.userData = null;
+      state.token = null;
+    },
+    loginWithToken: (state, action) => {
+      const { data, token } = action.payload;
+
+      localStorage.setItem("chat_app_token", JSON.stringify(token));
+
+      state.token = token;
+      state.userData = data;
+      state.isLogedIn = true;
+    },
+    noToken: (state) => {
       state.isLogedIn = false;
       state.userData = null;
       state.token = null;
@@ -49,6 +65,9 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
       const { data, token, message } = action.payload;
+
+      localStorage.setItem("chat_app_token", JSON.stringify(token));
+
       state.token = token;
       state.userData = data;
       state.isLogedIn = true;
@@ -63,6 +82,9 @@ const userSlice = createSlice({
 
     builder.addCase(signup.fulfilled, (state, action) => {
       const { data, token, message } = action.payload;
+
+      localStorage.setItem("chat_app_token", JSON.stringify(token));
+
       state.token = token;
       state.userData = data;
       state.isLogedIn = true;
@@ -77,5 +99,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, noToken, loginWithToken } = userSlice.actions;
 export default userSlice.reducer;

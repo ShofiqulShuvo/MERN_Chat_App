@@ -51,16 +51,20 @@ const MyChats = () => {
                   </h6>
                   {latestMessage && (
                     <div className="d-flex align-items-start opacity-75 m-0">
-                      <p className="p-0 m-0 fw-bold">
-                        {getLastMessageSenderName(
-                          userData,
-                          latestMessage.sender
-                        )}
-                        :
-                      </p>
-                      <p className="p-0 m-0 ms-1">
-                        {latestMessage.content.substr(0, 10)}...
-                      </p>
+                      {latestMessage.sender && (
+                        <p className="p-0 m-0 fw-bold">
+                          {getLastMessageSenderName(
+                            userData,
+                            latestMessage.sender
+                          )}
+                          :
+                        </p>
+                      )}
+                      {latestMessage.content && (
+                        <p className="p-0 m-0 ms-1">
+                          {latestMessage.content.substr(0, 10)}...
+                        </p>
+                      )}
                     </div>
                   )}
                 </button>

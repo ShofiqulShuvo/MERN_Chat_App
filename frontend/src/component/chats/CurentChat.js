@@ -23,24 +23,29 @@ const CurentChat = () => {
     <>
       {currentChat ? (
         <>
-          <div className="curent-chat-head d-flex justify-content-between align-items-center">
+          <div className="message-box-head d-flex justify-content-between align-items-center">
             <div className="d-flex align-items-center">
-              <button className="current-chat-back" onClick={handleCloseChat}>
+              <button
+                className="message-box-head-back"
+                onClick={handleCloseChat}
+              >
                 <FaArrowLeft />
               </button>
               <div className="ms-3 d-flex align-items-baseline">
                 {currentChat.isGroupChat ? (
-                  <div className="curent-chat-name">{currentChat.chatName}</div>
+                  <div className="message-box-head-name">
+                    {currentChat.chatName}
+                  </div>
                 ) : (
                   <>
-                    <div className="curent-chat-image  rounded-circle shadow-sm">
+                    <div className="message-box-head-image  rounded-circle shadow-sm">
                       <img
                         className="w-100 h-100 rounded-circle"
                         src={getChatPicture(userData, currentChat.users)}
                         alt=""
                       />
                     </div>
-                    <div className="ms-1 curent-chat-name">
+                    <div className="ms-1 message-box-head-name">
                       {getChatName(userData, currentChat.users)}
                     </div>
                   </>
@@ -49,7 +54,7 @@ const CurentChat = () => {
             </div>
             <div>
               <button
-                className="curent-chat-view"
+                className="message-box-head-view"
                 onClick={() => setViewDetail(true)}
               >
                 <FaEye />
@@ -59,7 +64,7 @@ const CurentChat = () => {
               ) : null}
             </div>
           </div>
-          <div className="curent-chat-message rounded-2 p-1">
+          <div className="message-box-head-message rounded-2 p-1">
             <MessagesBox />
           </div>
         </>

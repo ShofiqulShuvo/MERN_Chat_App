@@ -5,10 +5,12 @@ import { Navigate, Outlet } from "react-router-dom";
 const ProtectedRoute = () => {
   const { isLogedIn } = useSelector((state) => state.user);
 
-  if (isLogedIn) {
+  if (isLogedIn === undefined) {
+    return null;
+  } else if (isLogedIn === true) {
     return <Outlet />;
   } else if (isLogedIn === false) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/login"} />;
   }
 };
 

@@ -1,21 +1,21 @@
-.curent-chat-head {
+.message-box-head {
   height: 15%;
 }
 
-.curent-chat-image {
+.message-box-head-image {
   height: 40px;
   width: 40px;
   border: 2px solid #b94907;
   padding: 0;
 }
 
-.curent-chat-name {
+.message-box-head-name {
   font-size: 1.3rem;
   font-weight: bold;
   color: rgb(18, 34, 12);
 }
 
-.current-chat-back {
+.message-box-head-back {
   background-color: transparent;
   color: #333;
   font-size: 1.4rem;
@@ -24,11 +24,11 @@
   transform: translate(0, -1.5px);
 }
 
-.current-chat-back:hover {
+.message-box-head-back:hover {
   color: rgb(48, 3, 151);
 }
 
-.curent-chat-view {
+.message-box-head-view {
   background-color: transparent;
   color: rgb(51, 51, 51);
   font-size: 1.6rem;
@@ -37,11 +37,11 @@
   transform: translate(-8px, -5px);
 }
 
-.curent-chat-view:hover {
+.message-box-head-view:hover {
   color: rgb(16, 6, 158);
 }
 
-.curent-chat-message {
+.message-box-head-message {
   background-color: rgba(5, 5, 5, 0.411);
   height: 85%;
 }

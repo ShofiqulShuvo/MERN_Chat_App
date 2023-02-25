@@ -72,7 +72,7 @@ const SearchOffcanbus = () => {
         aria-controls="offcanvasExample"
       >
         <FaSearch />
-        <span className="ms-2 d-lg-block d-none">Search User</span>
+        <span className="ms-2 d-sm-block d-none">Search User</span>
       </button>
       <div
         className="offcanvas offcanvas-start"

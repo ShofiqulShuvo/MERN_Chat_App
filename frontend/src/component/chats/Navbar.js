@@ -7,6 +7,8 @@ import { logout } from "../../app/features/userSlice";
 import ProfileModal from "../ProfileModal";
 
 import "./navbar.css";
+import { getChatName } from "../../utility/chatPageLogic";
+import { goChatFromNotification } from "../../app/features/chatSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const Navbar = () => {
             <SearchOffcanbus />
           </div>
 
-          <h3 className="navbar-brand">My Chat App</h3>
+          <h3 className="navbar-brand">Chats</h3>
 
           <div className="d-flex align-items-center pe-1">
             {/* notification Dropdown */}
@@ -51,15 +53,27 @@ const Navbar = () => {
                   <li>
                     <p className="dropdown-item m-0">no new notification</p>
                   </li>
-                ) : null}
-                {/* <li>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => dispatch(logout())}
-                  >
-                    Logout
-                  </button>
-                </li> */}
+                ) : (
+                  notification.map((n, i) => {
+                    const { chat } = n;
+
+                    return (
+                      <li key={i}>
+                        <button
+                          className="dropdown-item m-0"
+                          onClick={() => dispatch(goChatFromNotification(n))}
+                        >
+                          <span>new message from </span>
+                          <span>
+                            {chat.isGroupChat
+                              ? chat.chatName
+                              : getChatName(userData, chat.users)}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })
+                )}
               </ul>
             </div>
 

@@ -33,6 +33,17 @@ const chatSlice = createSlice({
         state.chat.splice(findChat, 1);
         state.chat.unshift(chat);
       }
+
+      const findInNotification = state.notification.some(
+        (n) => n.chat._id === chat._id
+      );
+
+      if (findInNotification) {
+        state.notification = state.notification.filter(
+          (n) => n.chat._id !== chat._id
+        );
+      }
+
       state.currentChat = chat;
       state.selectedChat = true;
     },
@@ -45,6 +56,16 @@ const chatSlice = createSlice({
     },
     goToChat: (state, action) => {
       const chat = action.payload;
+
+      const findInNotification = state.notification.some(
+        (n) => n.chat._id === chat._id
+      );
+
+      if (findInNotification) {
+        state.notification = state.notification.filter(
+          (n) => n.chat._id !== chat._id
+        );
+      }
 
       state.currentChat = chat;
       state.selectedChat = true;
@@ -70,14 +91,26 @@ const chatSlice = createSlice({
 
       state.currentChat = null;
     },
-    updateLatestMessage: (state, action) => {
+    updateNotification: (state, action) => {
       const message = action.payload;
+
+      state.notification = [message, ...state.notification];
 
       const targetChat = state.chat.find((c) => c._id === message.chat._id);
 
       if (targetChat) {
         targetChat.latestMessage = message;
       }
+    },
+    goChatFromNotification: (state, action) => {
+      const message = action.payload;
+
+      state.notification = state.notification.filter(
+        (m) => m.chat._id !== message.chat._id
+      );
+
+      state.currentChat = message.chat;
+      state.selectedChat = true;
     },
   },
   extraReducers: (builder) => {
@@ -98,6 +131,7 @@ export const {
   closeChat,
   updateChat,
   leaveGroupChat,
-  updateLatestMessage,
+  updateNotification,
+  goChatFromNotification,
 } = chatSlice.actions;
 export default chatSlice.reducer;

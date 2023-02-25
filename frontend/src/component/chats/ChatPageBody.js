@@ -2,7 +2,7 @@ import React from "react";
 import MyChats from "./MyChats";
 import "./chatPageBody.css";
 import { useSelector } from "react-redux";
-import CurentChat from "./CurentChat";
+import MessagesBox from "./MessagesBox";
 
 const ChatPageBody = () => {
   const { selectedChat } = useSelector((state) => state.chat);
@@ -21,7 +21,7 @@ const ChatPageBody = () => {
           selectedChat ? "show-chat-page-body-message" : null
         }`}
       >
-        <CurentChat />
+        <MessagesBox />
       </div>
     </>
   );

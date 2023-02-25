@@ -108,6 +108,30 @@ const loginUser = async (req, res, next) => {
   }
 };
 
+// login user with token
+const loginUserToken = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (user) {
+      res.status(200).json({
+        data: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          picture: user.picture,
+        },
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(401);
+      throw new Error("no valid token");
+    }
+  } catch (error) {
+    res.status(res.statusCode || 500);
+    next(createError(error));
+  }
+};
+
 const getUsers = async (req, res) => {
   const searchKeyword = req.query.search;
 
@@ -123,5 +147,6 @@ const getUsers = async (req, res) => {
 module.exports = {
   signupUser,
   loginUser,
+  loginUserToken,
   getUsers,
 };
